@@ -25,7 +25,7 @@ RUN gzip -d /tmp/opencore.iso.gz && \
     rm -rf /tmp/*
 
 FROM scratch AS runner
-COPY --from=qemux/qemu-docker:5.16 / /
+COPY --from=clustx/qemu:latest / /
 
 ARG VERSION_ARG="0.0"
 ARG VERSION_OPENCORE="1.0.0"
@@ -58,10 +58,5 @@ ADD --chmod=644 \
 
 EXPOSE 8006 5900
 VOLUME /storage
-
-ENV RAM_SIZE "4G"
-ENV CPU_CORES "2"
-ENV DISK_SIZE "64G"
-ENV VERSION "ventura"
 
 ENTRYPOINT ["/usr/bin/tini", "-s", "/run/entry.sh"]
